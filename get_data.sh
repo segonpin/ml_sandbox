@@ -1,3 +1,4 @@
+# TODO migrate this to python
 set -euxo pipefail
 
 DATA_DIR=data
