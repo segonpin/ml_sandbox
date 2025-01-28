@@ -1,0 +1,6 @@
+# ignore binaries
+*.zip
+
+# ignore the venv folder
+venv/
+
