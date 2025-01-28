@@ -1,3 +1,5 @@
+matplotlib
+
 # h2o
 requests
 tabulate
