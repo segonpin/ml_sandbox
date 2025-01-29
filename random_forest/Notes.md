@@ -3,13 +3,10 @@
 We can use different Random Forest implementations:
 
 - XGBoost (its own interface)
-- H2O:
-  - XGBoost (with same parameters as before)
-  - Random Forest
-- scikit-learn:
-  - https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.RandomForestRegressor.html
-  - https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.RandomForestRegressor.html
-  - https://scikit-learn.org/1.6/auto_examples/ensemble/plot_forest_hist_grad_boosting_comparison.html#sphx-glr-auto-examples-ensemble-plot-forest-hist-grad-boosting-comparison-py
+- H2O (https://docs.h2o.ai/h2o/latest-stable/h2o-py/docs/intro.html):
+  - H2OXGBoostEstimator (https://docs.h2o.ai/h2o/latest-stable/h2o-py/docs/modeling.html#h2oxgboostestimator)
+  - H2ORandomForestEstimator (https://docs.h2o.ai/h2o/latest-stable/h2o-py/docs/modeling.html#h2orandomforestestimator)
+- scikit-learn RandomForestRegressor (https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.RandomForestRegressor.html)
 - LightGBM (Should be possible to do the same as with xgboost?)
 
 
