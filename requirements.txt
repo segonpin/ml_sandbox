@@ -5,6 +5,6 @@ requests
 tabulate
 h2o
 
-# pandas
-# numpy
+pandas
+numpy
 
