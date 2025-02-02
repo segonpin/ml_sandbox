@@ -1,4 +1,5 @@
 matplotlib
+scikit-learn
 
 # h2o
 requests
