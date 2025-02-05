@@ -5,6 +5,7 @@ import logging
 
 logging.basicConfig(format='%(asctime)s:%(message)s', datefmt='%Y-%m-%dT%H:%M:%S', level=logging.INFO)
 
+# Make some data handler class to keep information about the datasets: (files, hash) and other metadata like categorical columns, labels, ...
 DATA_DIR = "data"
 DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), DATA_DIR))
 

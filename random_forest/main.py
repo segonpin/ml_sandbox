@@ -9,8 +9,45 @@ from h2o.estimators.random_forest import H2ORandomForestEstimator
 from h2o.estimators.deeplearning import H2ODeepLearningEstimator
 
 import pandas as pd
+from dataclasses import dataclass
 
 DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "data"))
+
+@dataclass
+class Dataset:
+    name: str
+    rel_paths: list[tuple[str]]
+    cat_columns: list[str]
+    label: str
+    predictors: list[str]
+
+
+DATASETS = {
+    "prostate": Dataset(
+        name="prostate", 
+        rel_paths=[("prostate", "prostate.csv")],
+        cat_columns=["CAPSULE"],
+        label="CAPSULE",
+        predictors=['AGE', 'RACE', 'DPROS', 'DCAPS', 'PSA', 'VOL', 'GLEASON'],
+    ),
+    "diabetes": Dataset(
+        name="diabetes", 
+        rel_paths=[("diabetes", "diabetic_data.csv")],
+        cat_columns=["CAPSULE"],
+        label="CAPSULE",
+        predictors=['AGE', 'RACE', 'DPROS', 'DCAPS', 'PSA', 'VOL', 'GLEASON'],
+    ),
+    "zillow": Dataset(
+        name="zillow", 
+        rel_paths=[
+            ("zillow", "zillow-train.csv"),
+            ("zillow", "zillow-train.csv")
+        ],
+        cat_columns=["CAPSULE"],
+        label="CAPSULE",
+        predictors=['AGE', 'RACE', 'DPROS', 'DCAPS', 'PSA', 'VOL', 'GLEASON'],
+    ),
+}
 
 class DataHandler:
     def __init__(self, data_path=DATA_PATH):
@@ -29,13 +66,13 @@ class DataHandler:
 194559  380        0   69   1.0      2      1   1.9  20.7        6
 
 [194560 rows x 9 columns]"""
-        data_file = os.path.join(self.data_path, "prostate.csv")
+        data_file = os.path.join(self.data_path, "prostate", "prostate.csv")
         df = pd.read_csv(data_file)
         self.dtrain, self.dtest = train_test_split(df, test_size=0.10, random_state=42)
         self.dtrain, self.dvalid = train_test_split(self.dtrain, test_size=0.33, random_state=42)
 
         self.categorical_columns = ["CAPSULE"]
-        self.numerical_columns = ['ID', 'AGE', 'RACE', 'DPROS', 'DCAPS', 'PSA', 'VOL', 'GLEASON']
+        # self.numerical_columns = ['ID', 'AGE', 'RACE', 'DPROS', 'DCAPS', 'PSA', 'VOL', 'GLEASON']
 
         self.label = "CAPSULE"
         self.predictors = ['AGE', 'RACE', 'DPROS', 'DCAPS', 'PSA', 'VOL', 'GLEASON']
@@ -53,7 +90,6 @@ class DataHandler:
         self.dtrain = pd.read_csv(train_data_file)
         test_data_file = os.path.join(self.data_path, "zillow-test.csv")
         self.dtest = pd.read_csv(test_data_file)
-
 
 
 class H2ORFWrapper():
@@ -91,9 +127,11 @@ class H2ORFWrapper():
         # score and compute new metrics on the test data!
         self.m.model_performance(test_data=self.dtest)
 
-
-    def predict(self):
-        self.m.predict()
+    def evaluate(self):
+        pred = self.m.predict(self.dtest)["predict"].as_data_frame()
+        actual = self.dtest[self.label].as_data_frame()
+        # metrics = h2o.make_metrics(pred, actual)
+        print((pred["predict"]-actual[self.label]).abs().mean())
 
 
 def main():
@@ -103,8 +141,7 @@ def main():
     h2orf = H2ORFWrapper()
     h2orf.load_data(data_handler)
     h2orf.train()
-    print("outside")
-
+    h2orf.evaluate()
 
 if __name__ == "__main__":
     main()

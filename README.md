@@ -16,3 +16,9 @@ or just run
 python3 setup_venv.py
 ```
 
+For H2O one needs also java SDK 17, that can be installed with
+
+```
+winget install -e --id Oracle.JDK.17
+```
+

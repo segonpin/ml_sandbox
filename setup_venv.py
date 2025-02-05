@@ -33,7 +33,7 @@ def reminder_to_activate():
 
 
 if __name__ == "__main__":
-    VENV_NAME = "venv"  # Change this to customize the virtual environment name
+    VENV_NAME = ".venv"  # Change this to customize the virtual environment name
     REQUIREMENTS_FILE = "requirements.txt"  # Ensure this file exists in the current directory
 
     VENV_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), VENV_NAME))
